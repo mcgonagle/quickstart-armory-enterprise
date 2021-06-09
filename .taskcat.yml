@@ -3,22 +3,22 @@ project:
   shorten_stack_name: true
   template: templates/tm-new-vpc-bastion-eks-mysql-v6.yaml
   parameters:
-    KeyPairName: --overridden--
-    RemoteAccessCIDR: 127.0.0.1/32
+    RemoteAccessCIDR: --overridden--
     QSS3BucketName: $[taskcat_autobucket]
     QSS3BucketRegion: $[taskcat_current_region]
-    QSS3KeyPrefix: quickstart-eks-gitlab/
   lambda_source_path: functions/source
   lambda_zip_path: functions/packages
+  package_lambdas: true
   s3_bucket: ''
 
 tests:
-    deploy-in-3az-with-defaults:
+    armory-3az-defaults:
       parameters:
         AvailabilityZones: $[taskcat_genaz_3]
         NumberOfAZs: 3
         EKSPublicAccessEndpoint: Enabled
         ProvisionBastionHost: Disabled
-        DBUserPassword: 'Ae6ii5fcckj4ddi0t!'
+        DBUserPassword: --overridden--
+	DBMasterUserPassword: --overridden--
       regions:
       - us-east-1
