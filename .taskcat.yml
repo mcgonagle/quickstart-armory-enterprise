@@ -1,7 +1,7 @@
 project:
-  name: quickstart-eks-gitlab
+  name: quickstart-armory-spinnaker
   shorten_stack_name: true
-  template: templates/spinnaker-entrypoint-new-vpc.template.yaml
+  template: templates/tm-new-vpc-bastion-eks-mysql-v6.yaml
   parameters:
     KeyPairName: --overridden--
     RemoteAccessCIDR: 127.0.0.1/32
