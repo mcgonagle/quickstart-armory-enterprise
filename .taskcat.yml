@@ -9,16 +9,14 @@ project:
   lambda_source_path: functions/source
   lambda_zip_path: functions/packages
   package_lambdas: true
-  s3_bucket: ''
-
 tests:
-    armory-3az-defaults:
-      parameters:
-        AvailabilityZones: $[taskcat_genaz_3]
-        NumberOfAZs: 3
-        EKSPublicAccessEndpoint: Enabled
-        ProvisionBastionHost: Disabled
-        DBUserPassword: --overridden--
-	DBMasterUserPassword: --overridden--
-      regions:
-      - us-east-1
+  armory-3az-defaults:
+    parameters:
+      AvailabilityZones: $[taskcat_genaz_3]
+      NumberOfAZs: 3
+      EKSPublicAccessEndpoint: Enabled
+      ProvisionBastionHost: Disabled
+      DBUserPassword: --overridden--
+      DBMasterUserPassword: --overridden--
+    regions:
+    - us-east-1
