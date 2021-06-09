@@ -3,6 +3,7 @@ project:
   shorten_stack_name: true
   template: templates/tm-new-vpc-bastion-eks-mysql-v6.yaml
   parameters:
+    KeyPairName: --overridden--
     RemoteAccessCIDR: --overridden--
     QSS3BucketName: $[taskcat_autobucket]
     QSS3BucketRegion: $[taskcat_current_region]
