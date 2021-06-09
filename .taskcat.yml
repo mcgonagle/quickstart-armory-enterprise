@@ -8,7 +8,7 @@ project:
     QSS3BucketRegion: $[taskcat_current_region]
   lambda_source_path: functions/source
   lambda_zip_path: functions/packages
-  package_lambdas: true
+  package_lambda: true
 tests:
   armory-3az-defaults:
     parameters:
