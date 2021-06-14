@@ -11,7 +11,18 @@ Metadata:
       - ProjectCostCenter
       - Confidentiality
       - Compliance
-# The paramters groups for the different sections of the UI
+  LintSpellExclude:
+    - Kubernetes
+    - Helm
+    - Resource Name
+    - Route 53
+    - '"No"'
+    - '"Yes"'
+    - '"Enabled"'
+    - namespace
+    - serverless
+    - Serverless
+  # The parameter groups for the different sections of the UI
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
@@ -26,7 +37,7 @@ Metadata:
       - Label:
           default: Linux bastion configuration
         Parameters:
-          - EnableBastion
+          - ProvisionBastionHost
           - KeyPairName
           - RemoteAccessCIDR
           - EnableTCPForwarding
@@ -49,7 +60,7 @@ Metadata:
           - DBBackTrack
           - NotificationList
       - Label:
-          default: 'Serverless—applicable only when database engine mode (DBEngineMode) is serverless'
+          default: 'Serverless—applicable only when database engine mode (DBEngineMode) is serverless.'
         Parameters:
           - ServerlessMinCapacityUnit
           - ServerlessMaxCapacityUnit
@@ -113,8 +124,8 @@ Metadata:
         default: Multi-AZ deployment
       DBBackTrack:
         default: Aurora database backtracking
-      EnableBastion:
-        default: Enable bastion stack
+      ProvisionBastionHost:
+        default: Provision bastion host
       EnableTCPForwarding:
         default: Enable TCP forwarding
       PrivateSubnet1CIDR:
@@ -178,7 +189,6 @@ Metadata:
         default: Configure Container Insights
       ConfigureGrafana:
         default: Configure Grafana
-
 Parameters:
   NumberOfAZs:
     AllowedValues:
@@ -192,16 +202,6 @@ Parameters:
     Description: To rotate the password on a schedule (every 89 days), choose true
     Default: "false" 
     Type: String
-  PerAccountSharedResources:
-    Type: String
-    AllowedValues: ['AutoDetect', 'Yes', 'No']
-    Default: 'AutoDetect'
-    Description: Choose "No" if you already deployed another EKS Quick Start stack in your AWS account.
-  PerRegionSharedResources:
-    Type: String
-    AllowedValues: ['AutoDetect', 'Yes', 'No']
-    Default: 'AutoDetect'
-    Description: Choose "No" if you already deployed another EKS Quick Start stack in your Region.
   AvailabilityZones:
     Description: >-
       Availability Zones to use for the subnets in the VPC. This deployment uses two
@@ -279,7 +279,7 @@ Parameters:
   QSS3KeyPrefix:
     AllowedPattern: "^[0-9a-zA-Z-/]*$"
     ConstraintDescription: "Quick Start key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/)."
-    Default: quickstart-armory-quickstart/
+    Default: quickstart-armory-spinnaker/
     Description: "S3 key prefix that is used to simulate a directory for your copy of the Quick Start assets. Keep the default prefix unless you are customizing 
       the template. Changing this prefix updates code references to point to 
       a new Quick Start location. This prefix can include numbers, lowercase 
@@ -287,16 +287,15 @@ Parameters:
       See https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html 
       and https://aws-quickstart.github.io/option1.html."
     Type: String
-  EnableBastion:
-    AllowedValues:
-      - "true"
-      - "false"
-    Default: "true"
-    Description: If you do not want to create a Linux bastion stack, choose "false." You must have a bastion host to test the deployment as described in the deployment guide.
+  ProvisionBastionHost:
     Type: String
+    AllowedValues: [ "Enabled", "Disabled" ]
+    Default: "Enabled"
+    Description: Skip creating a bastion host by choosing "Disabled."
   EnableTCPForwarding:
     Type: String
-    Description: With TCP forwarding on the bastion host, you can set up traffic forwarding to resources in private subnets. To enable TCP forwarding, choose "true." This setting enables only the capability; it doesn't set up any traffic forwarding. You must enable TCP forwarding to test the deployment as described in the deployment guide.
+    Description: With TCP forwarding on the bastion host, you can set up traffic forwarding to resources in private subnets. To enable TCP forwarding, choose "true."
+      This setting enables only the capability; it doesn't set up any traffic forwarding. You must enable TCP forwarding to test the deployment as described in the deployment guide.
     Default: 'false'
     AllowedValues:
       - 'true'
@@ -516,12 +515,9 @@ Conditions:
   GovCloudCondition: !Equals
     - !Ref 'AWS::Region'
     - us-gov-west-1
-  EnableBastionAccess: !Equals
-    - !Ref EnableBastion
-    - "true"
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
   Using3AvailabilityZones:  !Equals [!Ref NumberOfAZs, '3']
-
+  BastionProvisioned: !Equals [ !Ref ProvisionBastionHost, "Enabled" ]
 Resources:
   VPCStack:
     Metadata:
@@ -558,7 +554,7 @@ Resources:
       Parameters:
         ConfigSetName: !Ref 'AWS::StackName'
         NodeVolumeSize: !Ref NodeVolumeSize
-  # # TODO: this launches the EKS Quick Start stack
+        KubernetesVersion: "1.18"
   EKSStack:
     Metadata:
       cfn-lint: { config: { ignore_checks: [ W9901 ]}}
@@ -588,7 +584,7 @@ Resources:
         KeyPairName: !Ref KeyPairName
         RemoteAccessCIDR: !Ref RemoteAccessCIDR
         EKSPublicAccessEndpoint: !Ref EKSPublicAccessEndpoint
-        #ProvisionBastionHost: !Ref bastion
+        ProvisionBastionHost: !Ref ProvisionBastionHost
         AdditionalEKSAdminUserArn: !Ref AdditionalEKSAdminUserArn
         AdditionalEKSAdminRoleArn: !Ref AdditionalEKSAdminRoleArn
         ClusterAutoScaler: Enabled
@@ -596,9 +592,6 @@ Resources:
         NumberOfNodes: !Ref NumberOfNodes
         MaxNumberOfNodes: !Ref MaxNumberOfNodes
         ConfigSetName: !Ref 'AWS::StackName'
-        # Shared resources
-        PerAccountSharedResources: !Ref PerAccountSharedResources
-        PerRegionSharedResources: !Ref PerRegionSharedResources
   AuroraStack:
     Metadata:
       cfn-lint: { config: { ignore_checks: [ W9901 ]}}
@@ -660,10 +653,34 @@ Resources:
     Properties:
       TemplateURL:
         !Sub
-          - 'https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-armory/templates/armory-template.yaml'
+          - 'https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/workload/armory-template.yaml'
           - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
             S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
       Parameters:
+        QSS3BucketName: !Ref QSS3BucketName
+        QSS3BucketRegion: !Ref QSS3BucketRegion
+        QSS3KeyPrefix: !Ref QSS3KeyPrefix
         KubeClusterName: !GetAtt EKSStack.Outputs.EKSClusterName        
     DependsOn: EKSStack
-  
+  # TODO : fetch the endpoint
+#  GetELBDetail:
+#    DependsOn: ConsulUiIngress
+#    Type: AWSQS::Kubernetes::Get
+#    Properties:
+#      ClusterName: !Ref "ClusterName"
+#      Name: "ingress/consul-ui"
+#      Namespace: !Ref "KubernetesNameSpace"
+#      JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
+Outputs:
+  EKSClusterName:
+    Value: !GetAtt EKSStack.Outputs.EKSClusterName
+  BastionIP:
+    Condition: BastionProvisioned
+    Value: !GetAtt EKSStack.Outputs.BastionIP
+  BastionSecurityGroup:
+    Condition: BastionProvisioned
+    Value: !GetAtt EKSStack.Outputs.BastionSecurityGroup
+  NodeGroupSecurityGroup:
+    Value: !GetAtt EKSStack.Outputs.NodeGroupSecurityGroup
+  # TODO: get the Armory LB endpoint from cluster
+  # kubectl get services spin-deck

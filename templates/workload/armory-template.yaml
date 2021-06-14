@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  KubeClusterName:
+    Default: ""
+    Type: String
+  QSS3BucketName:
+    Type: String
+  QSS3BucketRegion:
+    Type: String
+  QSS3KeyPrefix:
+    Type: String
+Conditions:
+  GovCloudCondition: !Equals
+    - !Ref 'AWS::Region'
+    - us-gov-west-1
+  UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
+Resources:
+  SpinnakerOpDeployment:
+    Type: "AWSQS::Kubernetes::Resource"
+    Properties:
+      ClusterName: !Ref KubeClusterName 
+      Namespace: "spinnaker-operator"
+#      Url: !Sub
+#        - 'https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/workload/operator.yaml'
+#        - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+#          S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+#      Url: !Sub
+#        - 's3://${S3Bucket}/${QSS3KeyPrefix}templates/workload/operator.yaml'
+#        - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+#          S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+      Url: https://raw.githubusercontent.com/armory/quickstart/main/operator.yaml
+#
+#      From - Url: https://raw.githubusercontent.com/mcgonagle/qas/main/operator.yaml
+  SpinnakerService:
+    Type: "AWSQS::Kubernetes::Resource"
+    Properties:
+      ClusterName: !Ref KubeClusterName 
+      Namespace: "spinnaker"
+#      Url: !Sub
+#        - 'https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/workload/spinnaker.yaml'
+#        - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+#          S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+#      Url: !Sub
+#        - 's3://${S3Bucket}/${QSS3KeyPrefix}templates/workload/spinnaker.yaml'
+#        - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+#          S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+      Url: https://raw.githubusercontent.com/armory/quickstart/main/operator.yaml
+#      From - Url: https://raw.githubusercontent.com/mcgonagle/qas/main/spinnaker.yaml
+    DependsOn: SpinnakerOpDeployment
