@@ -685,5 +685,5 @@ Outputs:
     Value:
       !Sub
       - "http://${DNSAddress}:9000/"
-      - DNSAddress: !Sub "${GetELBDetail.Response}"
+      - DNSAddress: !Sub "${SpinnakerStack.Outputs.SpinDeckDNSName}"
     Description: "Spinnaker kubernetes spin-deck LoadBalancer URL."

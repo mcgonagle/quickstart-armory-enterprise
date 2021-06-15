@@ -36,3 +36,14 @@ Resources:
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
 #      From - Url: https://raw.githubusercontent.com/mcgonagle/qas/main/spinnaker.yaml
     DependsOn: SpinnakerOpDeployment
+  GetELBDetail:
+    DependsOn: SpinnakerService
+    Type: AWSQS::Kubernetes::Get
+    Properties:
+      ClusterName: !Ref KubeClusterName
+      Name: "service/spin-deck"
+      Namespace: "spinnaker"
+      JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
+Outputs:
+  SpinDeckDNSName:
+    Value: !GetAtt "GetELBDetail.Response"
