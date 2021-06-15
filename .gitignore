@@ -3,3 +3,4 @@
 .idea/
 taskcat_outputs
 .taskcat_overrides.yml
+.DS_Store
