@@ -684,6 +684,6 @@ Outputs:
   SpinnakerUI:
     Value:
       !Sub
-      - "https://${DNSAddress}/"
-      - DNSAddress: !Sub "http://${GetELBDetail.Response}:9000/"
+      - "http://${DNSAddress}:9000/"
+      - DNSAddress: !Sub "${GetELBDetail.Response}"
     Description: "Spinnaker kubernetes spin-deck LoadBalancer URL."
