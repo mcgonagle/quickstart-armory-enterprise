@@ -662,15 +662,14 @@ Resources:
         QSS3KeyPrefix: !Ref QSS3KeyPrefix
         KubeClusterName: !GetAtt EKSStack.Outputs.EKSClusterName        
     DependsOn: EKSStack
-  # TODO : fetch the endpoint
-#  GetELBDetail:
-#    DependsOn: ConsulUiIngress
-#    Type: AWSQS::Kubernetes::Get
-#    Properties:
-#      ClusterName: !Ref "ClusterName"
-#      Name: "ingress/consul-ui"
-#      Namespace: !Ref "KubernetesNameSpace"
-#      JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
+  GetELBDetail:
+    DependsOn: SpinnakerStack
+    Type: AWSQS::Kubernetes::Get
+    Properties:
+      ClusterName: !GetAtt EKSStack.Outputs.EKSClusterName
+      Name: "service/spin-deck"
+      Namespace: "spinnaker"
+      JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
 Outputs:
   EKSClusterName:
     Value: !GetAtt EKSStack.Outputs.EKSClusterName
@@ -682,5 +681,9 @@ Outputs:
     Value: !GetAtt EKSStack.Outputs.BastionSecurityGroup
   NodeGroupSecurityGroup:
     Value: !GetAtt EKSStack.Outputs.NodeGroupSecurityGroup
-  # TODO: get the Armory LB endpoint from cluster
-  # kubectl get services spin-deck
+  SpinnakerUI:
+    Value:
+      !Sub
+      - "https://${DNSAddress}/"
+      - DNSAddress: !Sub "http://${GetELBDetail.Response}:9000/"
+    Description: "Spinnaker kubernetes spin-deck LoadBalancer URL."
