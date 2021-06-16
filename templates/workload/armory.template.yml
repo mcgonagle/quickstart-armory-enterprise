@@ -21,7 +21,7 @@ Resources:
       ClusterName: !Ref KubeClusterName 
       Namespace: "spinnaker-operator"
       Url: !Sub
-        - 's3://${S3Bucket}/${QSS3KeyPrefix}templates/workload/operator.yaml'
+        - 's3://${S3Bucket}/${QSS3KeyPrefix}manifests/operator.yaml'
         - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
 #      From - Url: https://raw.githubusercontent.com/mcgonagle/qas/main/operator.yaml
@@ -31,7 +31,7 @@ Resources:
       ClusterName: !Ref KubeClusterName 
       Namespace: "spinnaker"
       Url: !Sub
-        - 's3://${S3Bucket}/${QSS3KeyPrefix}templates/workload/spinnaker.yaml'
+        - 's3://${S3Bucket}/${QSS3KeyPrefix}manifests/spinnaker.yaml'
         - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
 #      From - Url: https://raw.githubusercontent.com/mcgonagle/qas/main/spinnaker.yaml

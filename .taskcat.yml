@@ -4,7 +4,7 @@ project:
   lambda_source_path: functions/source
   lambda_zip_path: functions/packages
   package_lambda: true
-  template: templates/spinnaker-entrypoint-new-vpc.yml
+  template: templates/spinnaker-entrypoint-new-vpc.template.yml
   parameters:
     QSS3BucketName: $[taskcat_autobucket]
     QSS3BucketRegion: $[taskcat_current_region]
