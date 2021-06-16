@@ -2,12 +2,12 @@
 
 ==== Prepare your AWS account
 
-_Describe any setup required in the AWS account prior to template launch_
+To start the workshop, you need an AWS account. If you do not have an account, you can signup by navigating to the following link
 
-==== Prepare your {partner-company-name} account
+https://aws.amazon.com/free/
 
-_Describe any setup required in the partner portal/account prior to template launch_
+Also, you need to generate a key for the AWS region you are working in, as well as, download and configure the following:
 
-==== Prepare for the deployment
+- Kubectl
+- AWS CLI
 
-_Describe any preparation required to complete the product build, such as obtaining licenses or placing files in S3_
