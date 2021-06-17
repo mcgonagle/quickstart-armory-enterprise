@@ -1,5 +1,10 @@
-Description: "Armory Installation, Do Not Remove Apache License Version 2.0 (qs-1r51947bu) Jun,15,2019"
+AWSTemplateFormatVersion: '2010-09-09'
+Description: "Armory Installation, Do Not Remove Apache License Version 2.0 (qs-1rphnhsi1) Jun,15,2019"
 Metadata:
+  cfn-lint:
+    config:
+      ignore_checks:
+        - E9101
   LICENSE: Apache License Version 2.0
   QuickStartDocumentation:
     EntrypointName: "Parameters for deploying into a new VPC"
@@ -16,12 +21,18 @@ Metadata:
     - Helm
     - Resource Name
     - Route 53
-    - '"No"'
-    - '"Yes"'
-    - '"Enabled"'
+    - No
+    - Yes
+    - Enabled
     - namespace
     - serverless
     - Serverless
+    - t3
+    - Linux
+    - subnets
+    - customizing
+    # This is a kubernetes term.
+    - LoadBalancer
   # The parameter groups for the different sections of the UI
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -30,51 +41,30 @@ Metadata:
         Parameters:
           - AvailabilityZones
           - VPCCIDR
+          - NumberOfAZs
           - PrivateSubnet1CIDR
           - PrivateSubnet2CIDR
+          - PrivateSubnet3CIDR
           - PublicSubnet1CIDR
           - PublicSubnet2CIDR
+          - PublicSubnet3CIDR
       - Label:
           default: Linux bastion configuration
         Parameters:
           - ProvisionBastionHost
           - KeyPairName
           - RemoteAccessCIDR
-          - EnableTCPForwarding
       - Label:
           default: Database configuration
         Parameters:
           - DBName
           - DBMasterUsername
-          - RotateDBPassword
           - DBMasterUserPassword
-          - DBPort
           - DBAutoMinorVersionUpgrade
           - DBBackupRetentionPeriod
           - DBEngineVersion
-          - DBEngineMode
-          - DBMultiAZ
           - DBInstanceClass
           - DBAllocatedStorageEncrypted
-          - DBCWLogExports
-          - DBBackTrack
-          - NotificationList
-      - Label:
-          default: 'Serverless—applicable only when database engine mode (DBEngineMode) is serverless.'
-        Parameters:
-          - ServerlessMinCapacityUnit
-          - ServerlessMaxCapacityUnit
-          - ServerlessAutoPause
-          - ServerlessSecondsUntilAutoPause
-      - Label:
-          default: (Optional) Database tags
-        Parameters:
-          - EnvironmentStage
-          - Application
-          - ApplicationVersion
-          - ProjectCostCenter
-          - Confidentiality
-          - Compliance
       - Label:
           default: Quick Start configuration
         Parameters:
@@ -91,23 +81,17 @@ Metadata:
           - NodeVolumeSize
           - NumberOfNodes
           - MaxNumberOfNodes
-          - ConfigureContainerInsights
-          - ConfigureGrafana
     ParameterLabels:
+      NumberOfAZs:
+        default: Number of Availability Zones
       AvailabilityZones:
         default: Availability Zones
       DBEngineVersion:
         default: Database engine version
-      DBEngineMode:
-        default: Database engine mode
       DBName:
         default: Database name
-      RotateDBPassword:
-        default: Rotate database password
       DBAllocatedStorageEncrypted:
         default: Database encryption enabled
-      DBCWLogExports:
-        default: Database CloudWatch log exports
       DBAutoMinorVersionUpgrade:
         default: Database automatic minor version upgrades
       DBBackupRetentionPeriod:
@@ -118,12 +102,6 @@ Metadata:
         default: Database administrator user name
       DBMasterUserPassword:
         default: Database administrator password
-      DBPort:
-        default: Database port
-      DBMultiAZ:
-        default: Multi-AZ deployment
-      DBBackTrack:
-        default: Aurora database backtracking
       ProvisionBastionHost:
         default: Provision bastion host
       EnableTCPForwarding:
@@ -132,10 +110,14 @@ Metadata:
         default: Private subnet 1 CIDR
       PrivateSubnet2CIDR:
         default: Private subnet 2 CIDR
+      PrivateSubnet3CIDR:
+        default: Private subnet 3 CIDR
       PublicSubnet1CIDR:
         default: Public subnet 1 CIDR
       PublicSubnet2CIDR:
         default: Public subnet 2 CIDR
+      PublicSubnet3CIDR:
+        default: Public subnet 3 CIDR
       QSS3BucketName:
         default: Quick Start S3 bucket name
       QSS3BucketRegion:
@@ -144,33 +126,11 @@ Metadata:
         default: Quick Start S3 key prefix
       VPCCIDR:
         default: VPC CIDR
-      NotificationList:
-        default: SNS notification-list email address
-      EnvironmentStage:
-        default: Environment stage
-      Application:
-        default: Application name
-      ApplicationVersion:
-        default: Application version
-      Compliance:
-        default: Compliance classifier
-      Confidentiality:
-        default: Confidentiality classifier
-      ProjectCostCenter:
-        default: Project cost center
       KeyPairName:
         default: Key-pair name
       RemoteAccessCIDR:
         default: Permitted IP range
-      ServerlessMinCapacityUnit:
-        default: Minimum Aurora capacity unit
-      ServerlessMaxCapacityUnit:
-        default: Maximum Aurora capacity unit
-      ServerlessAutoPause:
-        default: Pause compute capacity
-      ServerlessSecondsUntilAutoPause:
-        default: Pause after time of inactivity
-# Amazon EKS cluster configuration
+      # Amazon EKS cluster configuration
       EKSPublicAccessEndpoint:
         default: EKS public access endpoint
       AdditionalEKSAdminUserArn:
@@ -185,10 +145,6 @@ Metadata:
         default: Number of nodes
       MaxNumberOfNodes:
         default: Maximum number of nodes
-      ConfigureContainerInsights:
-        default: Configure Container Insights
-      ConfigureGrafana:
-        default: Configure Grafana
 Parameters:
   NumberOfAZs:
     AllowedValues:
@@ -198,14 +154,8 @@ Parameters:
     Description: Number of Availability Zones to use in the VPC. This must match your
       selections in the list of Availability Zones parameter.
     Type: String
-  RotateDBPassword:
-    Description: To rotate the password on a schedule (every 89 days), choose true
-    Default: "false" 
-    Type: String
   AvailabilityZones:
-    Description: >-
-      Availability Zones to use for the subnets in the VPC. This deployment uses two
-      Availability Zones. The logical order of your selections is preserved.
+    Description: Availability Zones to use for the subnets in the VPC. This deployment uses two Availability Zones. The logical order of your selections is preserved.
     Type: 'List<AWS::EC2::AvailabilityZone::Name>'
   KeyPairName:
     ConstraintDescription: "Name of an existing EC2 key pair. Cannot be left blank"
@@ -293,14 +243,6 @@ Parameters:
     AllowedValues: [ "Enabled", "Disabled" ]
     Default: "Enabled"
     Description: Skip creating a bastion host by choosing "Disabled."
-  EnableTCPForwarding:
-    Type: String
-    Description: With TCP forwarding on the bastion host, you can set up traffic forwarding to resources in private subnets. To enable TCP forwarding, choose "true."
-      This setting enables only the capability; it doesn't set up any traffic forwarding. You must enable TCP forwarding to test the deployment as described in the deployment guide.
-    Default: 'false'
-    AllowedValues:
-      - 'true'
-      - 'false'
   DBAllocatedStorageEncrypted:
     Default: "true"
     AllowedValues:
@@ -308,10 +250,6 @@ Parameters:
       - "false"
     Description: To disable database encryption, choose "false."
     Type: String
-  DBCWLogExports:
-    Type: String
-    Default: ''
-    Description: "Specify the comma-delimited list of database logs (error, slowquery, audit) to export to CloudWatch Logs."
   DBAutoMinorVersionUpgrade:
     AllowedValues:
       - "true"
@@ -374,16 +312,6 @@ Parameters:
       - 'Aurora-MySQL5.7-2.09.0'
       - 'Aurora-MySQL5.7-2.09.1'
       - 'Aurora-MySQL5.7-2.09.2'
-  DBEngineMode:
-    Description: "Engine mode of the cluster. With provisioned databases (the default), you provision and manage the server instance sizes. For descriptions of the other options, see https://aws.amazon.com/rds/aurora/faqs/."
-    Type: String
-    Default: 'provisioned'
-    AllowedValues:
-      - 'provisioned'
-      - 'parallelquery'
-      - 'serverless'
-      - 'global'
-      - 'multimaster'
   DBInstanceClass:
     AllowedValues:
       - db.r5.24xlarge
@@ -400,7 +328,7 @@ Parameters:
       - db.r4.2xlarge
       - db.t3.medium
       - db.t3.small
-    Description: "Name of the compute and memory-capacity class of the database instance. Not applicable for Aurora Serverless. Supported instance type for Aurora Multi-Master is db.r4.[2/4/8/16]xlarge only. db.t3 instance class doesn't support RDS Performance Insights"
+    Description: "Name of the compute and memory-capacity class of the database instance. db.t3 instance class doesn't support RDS Performance Insights."
     ConstraintDescription: "Must select a valid database instance type."
     Default: db.r5.large
     Type: String
@@ -420,54 +348,12 @@ Parameters:
     MaxLength: "16"
     MinLength: "1"
     Type: String
-  DBMultiAZ:
-    AllowedValues:
-      - "true"
-      - "false"
-    Default: "true"
-    Description: If the database instance is not in a multiple Availability Zone deployment, choose "false." Not applicable for Aurora Serverless.
-    Type: String
-  DBBackTrack:
-    AllowedValues:
-      - "true"
-      - "false"
-    Default: "false"
-    Description: Aurora database backtracking "rewinds" the DB cluster to a time you specify without needing to restore data from a backup. To enable database backtracking, choose "true." Not applicable for Aurora Serverless, Aurora Global Database and Aurora Multi-master. See https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Managing.Backtrack.html.
-    Type: String
   DBName:
     Default: 'AuroraMySQLDB'
     Description: "Name of the Amazon Aurora database."
     MaxLength: "63"
     MinLength: "5"
     Type: String
-  NotificationList:
-    Type: String
-    Default: 'db-ops@domain.com'
-    Description: Email-list address used to configure an SNS topic for sending CloudWatch alarm and RDS event notifications.
-    AllowedPattern: '^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
-    ConstraintDescription: provide a valid email address.
-  EnvironmentStage:
-    Type: String
-    Description: (Optional) Environment stage of the associated AWS resource.
-    AllowedValues:
-      - dev
-      - test
-      - pre-prod
-      - prod
-      - none
-    Default: none
-  Application:
-    Type: String
-    Default: ''
-    Description: (Optional) Name of the application for the associated AWS resource.
-  ApplicationVersion:
-    Type: String
-    Description: (Optional) Version of the application.
-    Default: ''
-  ProjectCostCenter:
-    Type: String
-    Default: ''
-    Description: (Optional) Cost center associated with the project of the associated AWS resource.
  # Cluster parameters
   EKSPublicAccessEndpoint:
     Type: String
@@ -501,21 +387,7 @@ Parameters:
     Default: 6
     Description: Maximum number of Amazon EKS node instances. The default is three.
     Type: Number
-  ConfigureContainerInsights:
-    Type: String
-    AllowedValues: [ 'Yes', 'No' ]
-    Default: 'No'
-    Description: Choose "Yes" to enable integration with CloudWatch Container Insights.
-  ConfigureGrafana:
-    Type: String
-    AllowedValues: [ 'Yes', 'No' ]
-    Default: 'No'
-    Description: Choose "Yes" to enable integration with Grafana.
-
 Conditions:
-  GovCloudCondition: !Equals
-    - !Ref 'AWS::Region'
-    - us-gov-west-1
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
   Using3AvailabilityZones:  !Equals [!Ref NumberOfAZs, '3']
   BastionProvisioned: !Equals [ !Ref ProvisionBastionHost, "Enabled" ]
@@ -534,6 +406,7 @@ Resources:
         AvailabilityZones: !Join
           - ','
           - !Ref AvailabilityZones
+        VPCCIDR: !Ref VPCCIDR
         NumberOfAZs: !Ref NumberOfAZs
         PrivateSubnet1ACIDR: !Ref PrivateSubnet1CIDR
         PrivateSubnet2ACIDR: !Ref PrivateSubnet2CIDR
@@ -581,7 +454,6 @@ Resources:
         PrivateSubnet2ID: !GetAtt VPCStack.Outputs.PrivateSubnet2AID
         PrivateSubnet3ID: !If [Using3AvailabilityZones, !GetAtt VPCStack.Outputs.PrivateSubnet3AID, !Ref 'AWS::NoValue']
         # Cluster properties
-        #EKSClusterName: !Ref KubeClusterName
         KeyPairName: !Ref KeyPairName
         RemoteAccessCIDR: !Ref RemoteAccessCIDR
         EKSPublicAccessEndpoint: !Ref EKSPublicAccessEndpoint
@@ -595,7 +467,7 @@ Resources:
         ConfigSetName: !Ref 'AWS::StackName'
   AuroraStack:
     Metadata:
-      cfn-lint: { config: { ignore_checks: [ W9901 ]}}
+      cfn-lint: { config: { ignore_checks: [ W9901, E9101 ]}}
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL:
@@ -610,10 +482,9 @@ Resources:
         DBName: !Ref DBName
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
         DBAllocatedStorageEncrypted: !Ref DBAllocatedStorageEncrypted
-        #DBCWLogExports: !Ref DBCWLogExports
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
         DBEngineVersion: !Ref DBEngineVersion
-        DBEngineMode: !Ref DBEngineMode
+        DBEngineMode: 'provisioned'
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: !Ref DBMasterUsername
         DBMasterUserPassword: !Ref DBMasterUserPassword
@@ -662,7 +533,6 @@ Resources:
         QSS3BucketRegion: !Ref QSS3BucketRegion
         QSS3KeyPrefix: !Ref QSS3KeyPrefix
         KubeClusterName: !GetAtt EKSStack.Outputs.EKSClusterName        
-    DependsOn: EKSStack
 Outputs:
   EKSClusterName:
     Value: !GetAtt EKSStack.Outputs.EKSClusterName
