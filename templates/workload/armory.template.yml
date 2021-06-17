@@ -1,4 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
+Description: "Deploys the Armory Enterprise operator and service onto EKS (qs-1rphnhskl)."
+Metadata:
+  cfn-lint: { config: { ignore_checks: [W9004, W9003, W9002, W9006, E1010] }}
 Parameters:
   KubeClusterName:
     Default: ""
@@ -10,12 +13,10 @@ Parameters:
   QSS3KeyPrefix:
     Type: String
 Conditions:
-  GovCloudCondition: !Equals
-    - !Ref 'AWS::Region'
-    - us-gov-west-1
   UsingDefaultBucket: !Equals [!Ref QSS3BucketName, 'aws-quickstart']
 Resources:
   SpinnakerOpDeployment:
+    Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: "AWSQS::Kubernetes::Resource"
     Properties:
       ClusterName: !Ref KubeClusterName 
@@ -26,6 +27,7 @@ Resources:
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
 #      From - Url: https://raw.githubusercontent.com/mcgonagle/qas/main/operator.yaml
   SpinnakerService:
+    Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: "AWSQS::Kubernetes::Resource"
     Properties:
       ClusterName: !Ref KubeClusterName 
@@ -38,6 +40,7 @@ Resources:
     DependsOn: SpinnakerOpDeployment
   GetELBDetail:
     DependsOn: SpinnakerService
+    Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: AWSQS::Kubernetes::Get
     Properties:
       ClusterName: !Ref KubeClusterName
