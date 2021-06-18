@@ -38,6 +38,17 @@ Resources:
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
 #      From - Url: https://raw.githubusercontent.com/mcgonagle/qas/main/spinnaker.yaml
     DependsOn: SpinnakerOpDeployment
+  IngressDeployment:
+    Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
+    Type: "AWSQS::Kubernetes::Resource"
+    Properties:
+      ClusterName: !Ref KubeClusterName 
+      Url: !Sub
+        - 's3://${S3Bucket}/${QSS3KeyPrefix}manifests/ingress.yaml'
+        - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+          S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+#      From - Url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/aws/deploy.yaml
+    DependsOn: SpinnakerService
   GetELBDetail:
     DependsOn: SpinnakerService
     Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
