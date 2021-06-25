@@ -1,6 +1,6 @@
 == Test the deployment
 
-NOTE: These steps must be executed from a network that has access to the Kubernetes API, as configured by the *EKS public access endpoint* and *Kubernetes API public access CIDR* parameters. For more information, see https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html[Installing kubectl^]. If you enabled the optional bastion host, you can connect to it by using SSH. Use the key pair that you specified during deployment and the IP address from the *Outputs* tab of the AWS CloudFormation stack. The bastion host already has `kubectl` installed and configured so that it connects to the cluster. To test the CLI, connect to the cluster, and run the following command.
+NOTE: These steps must be executed from a network that has access to the Kubernetes API, as configured by the *EKS public access endpoint* and *Kubernetes API public access CIDR* parameters. For more information, see https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html[Installing Kubectl^]. If you enabled the optional bastion host, you can connect to it by using SSH. Use the key pair that you specified during deployment and the IP address from the *Outputs* tab of the AWS CloudFormation stack. The bastion host already has Kubectl installed and configured so that it connects to the cluster. To test the CLI, connect to the cluster, and run the following command:
 
 ```
 $ kubectl version
@@ -50,15 +50,15 @@ managed by the native Kubernetes RBAC system. We recommend that you grant least-
 
 == Adding Kubernetes users
 
-This Quick Start creates an IAM role that is used to create the Kubernetes control plane. The AWS CloudFormation custom
-resources and Linux bastion host use the IAM role to provide access to the Kubernetes API. Additional IAM users or
-roles can be added as Kubernetes administrators (**system:master** kubernetes cluster role) by entering an ARN into the
+This Quick Start creates an IAM role that creates the Kubernetes control plane. The AWS CloudFormation custom
+resources and Linux bastion host use the IAM role to access the Kubernetes API. Additional IAM users or
+roles can be added as Kubernetes administrators (**system:master** Kubernetes cluster role) by entering an ARN into the
 **Additional EKS admin ARN** parameter when you launch this Quick Start. To add users after the stack launches, see https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html[Managing users or IAM roles for your cluster^].
 
-== Managing Kubernetes resources using AWS CloudFormation
+== Use AWS CloudFormation to manage Kubernetes resources
 
 This Quick Start includes AWS CloudFormation registry types that enable authoring, creating, and
-managing Kubernetes-based applications. For an example, see https://github.com/aws-quickstart/quickstart-aws-eks/blob/master/templates/example-workload.template.yaml[example-workload template^].
+managing Kubernetes-based applications. For an example, see the https://github.com/aws-quickstart/quickstart-aws-eks/blob/master/templates/example-workload.template.yaml[example-workload template^].
 
 == Optional add-ins
 
@@ -71,5 +71,5 @@ size of the Kubernetes cluster when there are insufficient resources or nodes.
 
 === Managed node group
 
-With Amazon EKS–managed node groups, provisioning and lifecycle management of the nodes is automated. All nodes get
+With Amazon EKS–managed node groups, provisioning and lifecycle management of the nodes is automated. All nodes are
 provisioned as part of an Auto Scaling group, which means you cannot use the *Cluster autoscaler* option. Nodes are created using the latest Amazon EKS–optimized Amazon Linux 2 AMI.

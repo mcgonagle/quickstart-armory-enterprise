@@ -2,12 +2,8 @@
 
 ==== Prepare your AWS account
 
-To start the workshop, you need an AWS account. If you do not have an account, you can signup by navigating to the following link
+To start the workshop, you must have an AWS account. If you do not have an account, sign up for one at https://aws.amazon.com/free/. Generate a key for the AWS Region you work in and download and configure the following resources:
 
-https://aws.amazon.com/free/
-
-Also, you need to generate a key for the AWS region you are working in, as well as, download and configure the following:
-
-- Kubectl
-- AWS CLI
+* Kubectl
+* AWS CLI
 

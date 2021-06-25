@@ -1,1 +1,1 @@
-Please note that the some services are not supported in all AWS Regions which limits the installation of Armory Spinnaker. For a current list of supported Regions, see Amazon Elastic Kubernetes Service endpoints and quotas.
+Note that some AWS services are not supported in all AWS Regions, which limits the installation of Armory Spinnaker. For a list of supported Regions, see https://docs.aws.amazon.com/general/latest/gr/eks.html[Amazon Elastic Kubernetes Service endpoints and quotas^].
