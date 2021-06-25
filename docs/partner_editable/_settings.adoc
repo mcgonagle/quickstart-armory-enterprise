@@ -5,10 +5,10 @@
 :partner-product-short-name: Armory Enterprise
 // If there's no partner, comment partner-company-name.
 :partner-company-name: Armory
-:doc-month: April
+:doc-month: June
 :doc-year: 2021
 // Uncomment the following "contributor" attributes as appropriate. If the partner agrees to include names, enter contributor names for every line we use. If partner doesn't want to include names, delete all placeholder names and keep only "{partner-company-name}" and "AWS Quick Start team." 
-:partner-contributors: Thomas A. McGonagle, Peter Blinstrubas - {partner-company-name}
+:partner-contributors: Thomas A. McGonagle, Peter Blinstrubas, {partner-company-name}
 //:other-contributors: Akua Mansa, Trek10
 //:aws-contributors: Janine Singh, AWS IoT Partner team
 :quickstart-contributors: Andrew Gargan, AWS Quick Start team
