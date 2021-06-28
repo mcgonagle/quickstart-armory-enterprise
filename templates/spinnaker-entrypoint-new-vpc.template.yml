@@ -332,8 +332,8 @@ Parameters:
     Type: String
   DBMasterUserPassword:
     AllowedPattern: ^(?=^.{8,255}$)(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?!.*[@/"']).*$
-    ConstraintDescription: "Use a minimum of 8 characters, including 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol (excluding quotes and the following symbols: / @ \)."
-    Description: "Administrator password for the database account. This value must include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol (excluding quotes and the following symbols: / @ \)."
+    ConstraintDescription: "Use a minimum of 8 characters, including 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol (excluding quotes and the following symbols: \ / @)."
+    Description: "Administrator password for the database account. This value must include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol (excluding quotes and the following symbols: \ / @)."
     MaxLength: "64"
     MinLength: "8"
     NoEcho: "True"
