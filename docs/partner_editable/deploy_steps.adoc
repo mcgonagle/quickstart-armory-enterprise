@@ -19,7 +19,7 @@
 |===
 |{launch_new_vpc}[Deploy Armory Enterprise into a new VPC^]
 |===
-Deployment can take between {deployment_time} to complete, depending on the chosen deployment option and parameter values.
+Deployment takes {deployment_time} to complete, depending on the parameter values you choose.
 
 //NOTE: If you deploy Amazon EKS into an existing VPC, ensure that your VPC has private subnets in different Availability Zones for the workload instances. The subnets require egress internet access using a NAT gateway or an HTTP proxy. If you want to use the Kubernetes integration with Elastic Load Balancing, you must tag each private subnet with `kubernetes.io/role/internal-elb=true` and each public subnet with `kubernetes.io/role/elb=true`.
 
