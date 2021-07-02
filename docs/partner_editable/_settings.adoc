@@ -5,10 +5,10 @@
 :partner-product-short-name: Armory Enterprise
 // If there's no partner, comment partner-company-name.
 :partner-company-name: Armory
-:doc-month: April
+:doc-month: July
 :doc-year: 2021
 // Uncomment the following "contributor" attributes as appropriate. If the partner agrees to include names, enter contributor names for every line we use. If partner doesn't want to include names, delete all placeholder names and keep only "{partner-company-name}" and "AWS Quick Start team." 
-:partner-contributors: Thomas A. McGonagle, Peter Blinstrubas - {partner-company-name}
+:partner-contributors: Thomas A. McGonagle, Peter Blinstrubas, {partner-company-name}
 //:other-contributors: Akua Mansa, Trek10
 //:aws-contributors: Janine Singh, AWS IoT Partner team
 :quickstart-contributors: Andrew Gargan, AWS Quick Start team
@@ -16,7 +16,7 @@
 // for example, 30 minutes or 60 minutes. 
 // Use hours for deployment times greater than 60 minutes (rounded to a quarter hour),
 // for example, 1.25 hours, 2 hours, 2.5 hours.
-:deployment_time: 15 minutes / 60 minutes / 1.5 hours
+:deployment_time: 15–90 minutes
 :default_deployment_region: us-east-1
 :parameters_as_appendix:
 
@@ -29,9 +29,6 @@
 // :eks_addin:
 :disable_regions:
 :custom_title:
-// TODO: create these links
-:launch_new_vpc: https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/quickcreate?templateUrl=https%3A%2F%2Faws-quickstart.s3.us-east-1.amazonaws.com%2Fquickstart-armory-enterprise%2Ftemplates%2Fspinnaker-entrypoint-new-vpc.template.yml&stackName=Armory-Spinnaker-on-EKS-New-VPC
-
-:template_new_vpc: https://fwd.aws/DgqPB
-
-WARNING: DEVELOPER PREVIEW ONLY
+:launch_new_vpc: https://fwd.aws/WqkWy? 
+//Console absolute link: https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/quickcreate?templateUrl=https%3A%2F%2Faws-quickstart.s3.us-east-1.amazonaws.com%2Fquickstart-armory-enterprise%2Ftemplates%2Fspinnaker-entrypoint-new-vpc.template.yml&stackName=Armory-Spinnaker-on-EKS-New-VPC
+:template_new_vpc: https://fwd.aws/DgqPB?

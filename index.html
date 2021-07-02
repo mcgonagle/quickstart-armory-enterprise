@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.15">
-<title>Overview</title>
+<title></title>
 <style>
 
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -851,7 +851,7 @@ p.footer-text a{color:#d7d8d8}
 </li>
 <li><a href="#_security">Security</a></li>
 <li><a href="#_adding_kubernetes_users">Adding Kubernetes users</a></li>
-<li><a href="#_managing_kubernetes_resources_using_aws_cloudformation">Managing Kubernetes resources using AWS CloudFormation</a></li>
+<li><a href="#_use_aws_cloudformation_to_manage_kubernetes_resources">Use AWS CloudFormation to manage Kubernetes resources</a></li>
 <li><a href="#_optional_add_ins">Optional add-ins</a>
 <ul class="sectlevel2">
 <li><a href="#_cluster_autoscaler">Cluster autoscaler</a></li>
@@ -859,6 +859,7 @@ p.footer-text a{color:#d7d8d8}
 </ul>
 </li>
 <li><a href="#_faq">FAQ</a></li>
+<li><a href="#_customer_responsibility">Customer responsibility</a></li>
 <li><a href="#_parameter_reference">Parameter reference</a>
 <ul class="sectlevel2">
 <li><a href="#_parameters_for_deploying_into_a_new_vpc">Parameters for deploying into a new VPC</a></li>
@@ -874,18 +875,6 @@ p.footer-text a{color:#d7d8d8}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-DEVELOPER PREVIEW ONLY
-</td>
-</tr>
-</table>
-</div>
 <h2 id="_armory_enterprise_on_the_aws_cloud" class="discrete text-center">Armory Enterprise on the AWS Cloud</h2>
 <h2 id="_quick_start_reference_deployment" class="discrete text-left text-center">Quick Start Reference Deployment</h2>
 <div class="imageblock text-center">
@@ -894,8 +883,8 @@ DEVELOPER PREVIEW ONLY
 </div>
 </div>
 <div class="paragraph text-center">
-<p><strong>April 2021</strong><br>
-<em>Thomas A. McGonagle, Peter Blinstrubas - Armory</em><br>
+<p><strong>July 2021</strong><br>
+<em>Thomas A. McGonagle, Peter Blinstrubas, Armory</em><br>
 <em>Andrew Gargan, AWS Quick Start team</em></p>
 </div>
 <div class="admonitionblock tip text-left">
@@ -920,7 +909,7 @@ report bugs, or submit feature ideas for this Quick Start.
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This guide provides instructions for deploying the Armory Quick Start reference architecture on the AWS Cloud. This Quick Start provides a continuous deployment foundation for AWS Cloud infrastructures. It deploys Armory&#8217;s continuous delivery platform according to AWS best practices and guidelines. The Armory platform is a modern, developer-friendly view of software delivery. It is target agnostic, so teams can instantly deploy their code at scale to any and all clouds using a single, golden path to production. For a discussion of best design practices building deployment pipelines, see the documentation and articles listed in the <a href="https://docs.armory.io/docs/">Armory Documentation</a></p>
+<p>This guide provides instructions for deploying the Armory Quick Start reference architecture on the AWS Cloud. This Quick Start provides a nearly continuous deployment foundation for AWS Cloud infrastructures. It deploys the Armory platform, a developer-based view of software delivery, according to AWS best practices and guidelines. It is target agnostic, so teams can deploy their code at scale to any and all clouds using a single path to production. For more information, see <a href="https://docs.armory.io/docs/" target="_blank" rel="noopener">Armory Docs</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -940,13 +929,13 @@ Amazon may share user-deployment information with the AWS Partner that collabora
 <h2 id="_armory_enterprise_on_aws">Armory Enterprise on AWS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Armory is the company driving modern digital transformation with its enterprise version of Spinnaker. Armory&#8217;s scalable, flexible and secure platform automates software delivery, enabling software teams to ship better software, faster. The core of Armory’s platform is powered by Spinnaker, the continuous delivery platform developed and open-sourced by Netflix and Google to help companies quickly and safely deploy software into multiple clouds. Armory builds on open-source Spinnaker’s foundation, adding proprietary features for bolstered enterprise scale, along with 24x7 enterprise-grade support. Armory’s platform is trusted by dozens of Global 2000 customers in financial services, technology, retail, healthcare and entertainment. Armory is also a proud sponsor of, and contributor to, the Continuous Delivery Foundation (CDF), the vendor-neutral home of the fastest-growing projects for continuous delivery.</p>
+<p>Armory provides a scalable and flexible platform for automating software delivery. To help companies deploy software into multiple clouds, the core of Armory’s platform is powered by Operator, an open-source, continuous-delivery platform developed by Netflix and Google. Continuous delivery is a process that builds production software on a consistent basis.</p>
 </div>
 <div class="paragraph">
-<p>Continuous Delivery is the process of building software that can be put into production on a consistent, understood, and frequent basis. Previously, gluing together scripts to try to deliver software was good enough. Your deployment velocity was very slow and sometimes the whole process would fall over on itself, but it mostly worked most of the time. Armory realizes the vision and promise of continuous delivery by providing a purpose-built tool that allows you to reliably deliver software, to any target, as frequently as you want.</p>
+<p>Armory Operator acts as a workflow engine by combining build, provision, and deploy steps into an automated pipeline. It deploys your workloads, such as containers, packages, and Amazon Machine Images (AMIs) to your AWS environment. This includes Amazon Elastic Compute Cloud (Amazon EC2), Amazon Elastic Kubernetes Service (Amazon EKS), Amazon Elastic Container Service (Amazon ECS), and AWS Lambda.</p>
 </div>
 <div class="paragraph">
-<p>With the Armory Platform&#8217;s rich ecosystem of integrations, you can automate your code going from commit to production. Once in production, monitor applications. Scale up, scale down, roll back, or roll forward; all these actions can be viewed in Armory and automated.</p>
+<p>With Armory&#8217;s integrations, you can automate your code from commit to production, where users can then monitor applications, scale up, scale down, roll back, or roll forward. You can use Armory to view and automate all of these actions.</p>
 </div>
 </div>
 </div>
@@ -981,7 +970,7 @@ After you deploy the Quick Start, create <a href="https://docs.aws.amazon.com/aw
 <h2 id="_software_licenses">Software licenses</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There are no licencing requirements for this Quick Start.</p>
+<p>The Armory Quick Start is free to try but requires an Armory license for production environments. To obtain a license, contact <a href="https://www.armory.io/needs/?utm_source=aws&amp;utm_medium=partner_listing_quickstart&amp;utm_campaign=contactus" target="_blank" rel="noopener">Armory</a>.</p>
 </div>
 </div>
 </div>
@@ -1003,25 +992,48 @@ After you deploy the Quick Start, create <a href="https://docs.aws.amazon.com/aw
 <div class="ulist">
 <ul>
 <li>
-<p>An Armory Spinnaker Installation in an EKS cluster.</p>
-</li>
-<li>
 <p>A highly available architecture that spans three Availability Zones.</p>
 </li>
 <li>
-<p>A VPC configured with public and private subnets, according to AWS best practices, to provide you with your own virtual network on AWS.</p>
+<p>A virtual private cloud (VPC) configured with public and private subnets, according to AWS best practices, to provide you with your own virtual network on AWS.</p>
 </li>
 <li>
-<p>In the public subnets, managed NAT gateways to allow outbound internet access for resources in the private subnets.</p>
+<p>In the public subnets:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A Linux bastion host, configured for Kubernetes, in an Auto Scaling group to allow inbound Secure Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in the private subnets.</p>
 </li>
 <li>
-<p>In one public subnet, a Linux bastion host in an Auto Scaling group to allow inbound Secure Shell (SSH) access to Amazon Elastic Compute Cloud (Amazon EC2) instances in private subnets. The bastion host is also configured with the Kubernetes <code>kubectl</code> command line interface (CLI) for managing the Kubernetes cluster.</p>
+<p>A managed network address translation (NAT) gateway to allow outbound internet access for resources in the private subnets.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>An Amazon EKS cluster, which creates the Kubernetes control plane.</p>
+<p>In the private subnets:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A group of Kubernetes nodes.</p>
 </li>
 <li>
-<p>In the private subnets, a group of Kubernetes nodes.</p>
+<p>ElastiCache Redis for caching storage for Orca and Clouddriver.</p>
+</li>
+<li>
+<p>Amazon Aurora for persistent storage of Orca and Clouddriver assets.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Amazon EKS for the underlying Kubernetes infrastructure and platform.</p>
+</li>
+<li>
+<p>Amazon Simple Storage Service (Amazon S3) for persistent storage of Armory objects.</p>
+</li>
+<li>
+<p>An Armory Operator installation in an Amazon EKS cluster, which creates the Kubernetes control plane.</p>
 </li>
 </ul>
 </div>
@@ -1039,7 +1051,7 @@ and <a href="https://aws.amazon.com/training/" target="_blank" rel="noopener">AW
 deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 </div>
 <div class="paragraph">
-<p>This Quick Start also assumes familiarity with:</p>
+<p>This Quick Start assumes familiarity with the following products and resources:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1133,13 +1145,7 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <div class="sect3">
 <h4 id="_prepare_your_aws_account">Prepare your AWS account</h4>
 <div class="paragraph">
-<p>To start the workshop, you need an AWS account. If you do not have an account, you can signup by navigating to the following link</p>
-</div>
-<div class="paragraph">
-<p><a href="https://aws.amazon.com/free/" class="bare">https://aws.amazon.com/free/</a></p>
-</div>
-<div class="paragraph">
-<p>Also, you need to generate a key for the AWS region you are working in, as well as, download and configure the following:</p>
+<p>To start the workshop, you must have an AWS account. If you do not have an account, sign up for one at <a href="https://aws.amazon.com/free/" class="bare">https://aws.amazon.com/free/</a>. Generate a key for the AWS Region you work in and download and configure the following resources:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1155,17 +1161,17 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <div class="sect3">
 <h4 id="_deployment_options">Deployment options</h4>
 <div class="paragraph">
-<p>This Quick Start provides one deployment options:</p>
+<p>This Quick Start provides one deployment option:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Deploy Armory Enterprise into a new VPC (end-to-end deployment)</strong>. This option builds a new AWS environment consisting of the VPC, subnets, NAT gateways, security groups, bastion hosts, and other infrastructure components, and then deploys Armory Enterprise into an Amazon EKS cluster in this new VPC.</p>
+<p><strong>Deploy Armory Enterprise into a new VPC (end-to-end deployment)</strong>. This option builds a new AWS environment consisting of the VPC, subnets, NAT gateways, security groups, bastion hosts, and other infrastructure components. It then deploys Armory Enterprise into an Amazon EKS cluster in this new VPC.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>The Quick Start provides separate templates for these options. It also lets you configure CIDR blocks, instance types, and Amazon EKS settings, as discussed later in this guide.</p>
+<p>This Quick Start lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and Amazon EKS settings, as discussed later in this guide.</p>
 </div>
 </div>
 </div>
@@ -1190,7 +1196,7 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <p>Use the Region selector in the navigation bar to choose the AWS Region where you want to deploy Amazon EKS.</p>
 </li>
 <li>
-<p>Select the key pair that you created earlier. In the navigation pane of the <a href="https://console.aws.amazon.com/ec2/" target="_blank" rel="noopener">Amazon EC2 console</a>, choose <strong>Key Pairs</strong>, and then choose your key pair from the list.</p>
+<p>Choose the key pair that you created earlier. In the navigation pane of the <a href="https://console.aws.amazon.com/ec2/" target="_blank" rel="noopener">Amazon EC2 console</a>, choose <strong>Key Pairs</strong>, and then choose your key pair from the list.</p>
 </li>
 </ol>
 </div>
@@ -1213,12 +1219,12 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/quickcreate?templateUrl=https%3A%2F%2Faws-quickstart.s3.us-east-1.amazonaws.com%2Fquickstart-armory-enterprise%2Ftemplates%2Fspinnaker-entrypoint-new-vpc.template.yml&amp;stackName=Armory-Spinnaker-on-EKS-New-VPC" target="_blank" rel="noopener">Deploy Armory Enterprise into a new VPC</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://fwd.aws/WqkWy?" target="_blank" rel="noopener">Deploy Armory Enterprise into a new VPC</a></p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Deployment can take between 15 minutes / 60 minutes / 1.5 hours to complete, depending on the chosen deployment option and parameter values.</p>
+<p>Deployment takes 15–90 minutes to complete, depending on the parameter values you choose.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic" start="3">
@@ -1310,7 +1316,7 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-These steps must be executed from a network that has access to the Kubernetes API, as configured by the <strong>EKS public access endpoint</strong> and <strong>Kubernetes API public access CIDR</strong> parameters. For more information, see <a href="https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html" target="_blank" rel="noopener">Installing kubectl</a>. If you enabled the optional bastion host, you can connect to it by using SSH. Use the key pair that you specified during deployment and the IP address from the <strong>Outputs</strong> tab of the AWS CloudFormation stack. The bastion host already has <code>kubectl</code> installed and configured so that it connects to the cluster. To test the CLI, connect to the cluster, and run the following command.
+These steps must run from a network that has access to the Kubernetes API, as configured by the <strong>EKS public access endpoint</strong> and <strong>Kubernetes API public access CIDR</strong> parameters. For more information, see <a href="https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html" target="_blank" rel="noopener">Installing Kubectl</a>. If you enabled the optional bastion host, connect to it by using SSH. Use the key pair that you specified during deployment and the IP address from the <strong>Outputs</strong> tab of the AWS CloudFormation stack. The bastion host already has Kubectl installed and configured so that it connects to the cluster. To test the CLI, connect to the cluster, and run the following command:
 </td>
 </tr>
 </table>
@@ -1362,13 +1368,13 @@ CloudFormation operations on the stack to behave unexpectedly.</p>
 <div class="sect2">
 <h3 id="_monitor_additional_resource_usage">Monitor additional resource usage</h3>
 <div class="paragraph">
-<p>This deployment enables users of the Amazon EKS cluster to create elastic load balancers and Amazon EBS volumes
-as part of their Kubernetes applications. Because these carry additional costs, we recommend that you grant users of the
-Amazon EKS cluster the minumum permissions required according to <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/" target="_blank" rel="noopener">Kubernetes Role Based Access Control (RBAC)</a>
-and that you monitor resource usage by using the Kubernetes CLI or API to describe persistent
+<p>Users of the Amazon EKS cluster can create elastic load balancers and Amazon EBS volumes
+as part of their Kubernetes applications. Because these carry additional costs, grant users of the
+EKS cluster the minimum permissions required by <a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/" target="_blank" rel="noopener">Kubernetes Role Based Access Control (RBAC)</a>,
+and monitor resource usage through the Kubernetes CLI or API for persistent
 volume claims (PVC) and <code>LoadBalancer</code> resources across all namespaces. To disable this functionality, update the
 <code>ControlPlaneRole</code> IAM role in the child stack to restrict access to the Kubernetes control plane for specific AWS
-APIs, such as <code>ec2:CreateVolume</code> and <code>elb:CreateLoadBalancer</code>.</p>
+API operations, such as <code>ec2:CreateVolume</code> and <code>elb:CreateLoadBalancer</code>.</p>
 </div>
 </div>
 </div>
@@ -1386,19 +1392,19 @@ managed by the native Kubernetes RBAC system. We recommend that you grant least-
 <h2 id="_adding_kubernetes_users">Adding Kubernetes users</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This Quick Start creates an IAM role that is used to create the Kubernetes control plane. The AWS CloudFormation custom
-resources and Linux bastion host use the IAM role to provide access to the Kubernetes API. Additional IAM users or
-roles can be added as Kubernetes administrators (<strong>system:master</strong> kubernetes cluster role) by entering an ARN into the
+<p>This Quick Start creates an IAM role that creates the Kubernetes control plane. The AWS CloudFormation custom
+resources and Linux bastion host use the IAM role to access the Kubernetes API. Additional IAM users and
+roles can be added as Kubernetes administrators (<strong>system:master</strong> Kubernetes cluster role) by entering an ARN into the
 <strong>Additional EKS admin ARN</strong> parameter when you launch this Quick Start. To add users after the stack launches, see <a href="https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html" target="_blank" rel="noopener">Managing users or IAM roles for your cluster</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_managing_kubernetes_resources_using_aws_cloudformation">Managing Kubernetes resources using AWS CloudFormation</h2>
+<h2 id="_use_aws_cloudformation_to_manage_kubernetes_resources">Use AWS CloudFormation to manage Kubernetes resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This Quick Start includes AWS CloudFormation registry types that enable authoring, creating, and
-managing Kubernetes-based applications. For an example, see <a href="https://github.com/aws-quickstart/quickstart-aws-eks/blob/master/templates/example-workload.template.yaml" target="_blank" rel="noopener">example-workload template</a>.</p>
+<p>This Quick Start includes AWS CloudFormation registry types that allow authoring, creating, and
+managing Kubernetes-based applications. For an example, see the <a href="https://github.com/aws-quickstart/quickstart-aws-eks/blob/master/templates/example-workload.template.yaml" target="_blank" rel="noopener">example-workload template</a>.</p>
 </div>
 </div>
 </div>
@@ -1418,7 +1424,7 @@ size of the Kubernetes cluster when there are insufficient resources or nodes.</
 <div class="sect2">
 <h3 id="_managed_node_group">Managed node group</h3>
 <div class="paragraph">
-<p>With Amazon EKS–managed node groups, provisioning and lifecycle management of the nodes is automated. All nodes get
+<p>With Amazon EKS–managed node groups, provisioning and lifecycle management of the nodes is automated. All nodes are
 provisioned as part of an Auto Scaling group, which means you cannot use the <strong>Cluster autoscaler</strong> option. Nodes are created using the latest Amazon EKS–optimized Amazon Linux 2 AMI.</p>
 </div>
 </div>
@@ -1458,7 +1464,15 @@ When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, 
 <p><strong>Q.</strong> I encountered a size limitation error when I deployed the AWS CloudFormation templates.</p>
 </div>
 <div class="paragraph">
-<p><strong>A.</strong> We recommend that you launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a non-Amazon S3 location, you might encounter template size limitations when you create the stack. For more information, see <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html" target="_blank" rel="noopener">AWS CloudFormation quotas</a>.</p>
+<p><strong>A.</strong> Launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer, or from a location other than Amazon S3, you might encounter template size limitations when you create the stack. For more information, see <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html" target="_blank" rel="noopener">AWS CloudFormation quotas</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_customer_responsibility">Customer responsibility</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After you successfully deploy this Quick Start, confirm that your resources and services are updated and configured — including any required patches — to meet your security and other needs. For more information, see the <a href="https://aws.amazon.com/compliance/shared-responsibility-model/" target="_blank" rel="noopener">AWS Shared Responsibility Model</a>.</p>
 </div>
 </div>
 </div>
@@ -1498,7 +1512,7 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <td class="tableblock halign-left valign-top"><p class="tableblock">Availability Zones
 (<code>AvailabilityZones</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Availability Zones to use for the subnets in the VPC. This deployment uses two Availability Zones. The logical order of your selections is preserved.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Availability Zones to use for the subnets in the VPC. This deployment uses two Availability Zones.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">VPC CIDR
@@ -1510,19 +1524,19 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of Availability Zones
 (<code>NumberOfAZs</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>2</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of Availability Zones to use in the VPC. This must match your selections in the list of Availability Zones parameter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of Availability Zones to use in the VPC. This must match the parameter for the list of Availability Zones.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Private subnet 1 CIDR
 (<code>PrivateSubnet1CIDR</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>10.0.0.0/19</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for private subnet 1 located in Availability Zone 1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for private subnet 1, located in Availability Zone 1.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Private subnet 2 CIDR
 (<code>PrivateSubnet2CIDR</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>10.0.32.0/19</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for private subnet 2 located in Availability Zone 2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for private subnet 2, located in Availability Zone 2.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Private subnet 3 CIDR
@@ -1534,13 +1548,13 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 1 CIDR
 (<code>PublicSubnet1CIDR</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>10.0.128.0/20</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for the public subnet 1 located in Availability Zone 1.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for public subnet 1, located in Availability Zone 1.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 2 CIDR
 (<code>PublicSubnet2CIDR</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>10.0.144.0/20</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for the public subnet 2 located in Availability Zone 2.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CIDR block for public subnet 2, located in Availability Zone 2.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Public subnet 3 CIDR
@@ -1572,10 +1586,10 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <td class="tableblock halign-left valign-top"><p class="tableblock">Skip creating a bastion host by choosing "Disabled."</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Key-pair name
+<td class="tableblock halign-left valign-top"><p class="tableblock">Key pair name
 (<code>KeyPairName</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the existing key pair for connecting to your EC2 instance. A key pair consists of a private key and a public key.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of an existing key pair for connecting to your Amazon EC2 instance. A key pair consists of a private key and public key.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Permitted IP range
@@ -1607,16 +1621,16 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <td class="tableblock halign-left valign-top"><p class="tableblock">Name of the Amazon Aurora database.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Database administrator user name
+<td class="tableblock halign-left valign-top"><p class="tableblock">Database administrator
 (<code>DBMasterUsername</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>msadmin</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Administrator user name for the database account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Administrator name for the database account.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database administrator password
 (<code>DBMasterUserPassword</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Requires input</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Administrator password for the database account. Must include 1 uppercase, 1 lowercase, 1 number, 1 symbol (not / @ " ').</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Administrator password for the database account. This value must include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 symbol (excluding quotes and the following symbols:  / @).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database automatic minor version upgrades
@@ -1628,19 +1642,19 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database backup retention period
 (<code>DBBackupRetentionPeriod</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>35</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of days (1 to 35) that automatic database snapshots are retained.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of days (1–35) to retain automatic database snapshots.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database engine version
 (<code>DBEngineVersion</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Aurora-MySQL5.6.10a</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Version of the database engine. Currently Multi-Master is available only for Aurora-MySQL5.6.10a, Serverless is available only for Aurora-MySQL5.6.10a and Aurora-MySQL5.7-2.07.1. To see supported Aurora features by Regions and engine versions, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraFeaturesRegionsDBEngines.grids.html" class="bare">https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraFeaturesRegionsDBEngines.grids.html</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version of the database engine. Currently, multi-master clusters are available only for Aurora-MySQL5.6.10a. Serverless is available only for Aurora-MySQL5.6.10a and Aurora-MySQL5.7-2.07.1. For more information, see <a href="https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraFeaturesRegionsDBEngines.grids.html" class="bare">https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraFeaturesRegionsDBEngines.grids.html</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database instance class
 (<code>DBInstanceClass</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>db.r5.large</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the compute and memory-capacity class of the database instance. db.t3 instance class doesn&#8217;t support RDS Performance Insights.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the compute and memory-capacity class of the database instance. The db.t3 instance class does not support Amazon RDS performance insights.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Database encryption enabled
@@ -1669,19 +1683,19 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 <td class="tableblock halign-left valign-top"><p class="tableblock">Quick Start S3 bucket name
 (<code>QSS3BucketName</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>aws-quickstart</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the S3 bucket for your copy of the Quick Start assets. Keep the default name unless you are customizing the template. Changing the name updates code references to point to a new Quick Start location. This name can include numbers, lowercase letters, uppercase letters, and hyphens, but do not start or end with a hyphen (-). See <a href="https://aws-quickstart.github.io/option1.html" class="bare">https://aws-quickstart.github.io/option1.html</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the S3 bucket for your copy of the Quick Start assets. Keep the default prefix unless you are customizing the template. Changing the name updates code references to point to a new Quick Start location. This name can include numbers, lowercase letters, uppercase letters, and hyphens. It cannot start or end with a hyphen (-). For more information, see <a href="https://aws-quickstart.github.io/option1.html" class="bare">https://aws-quickstart.github.io/option1.html</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Quick Start S3 bucket Region
 (<code>QSS3BucketRegion</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>us-east-2</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. Keep the default Region unless you are customizing the template. Changing this Region updates code references to point to a new Quick Start location. When using your own bucket, specify the Region. See <a href="https://aws-quickstart.github.io/option1.html" class="bare">https://aws-quickstart.github.io/option1.html</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS Region where the Quick Start S3 bucket (QSS3BucketName) is hosted. Keep the default Region unless you are customizing the template. Changing this Region updates code references to point to a new Quick Start location. When using your own bucket, specify the Region. For more information, see <a href="https://aws-quickstart.github.io/option1.html" class="bare">https://aws-quickstart.github.io/option1.html</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Quick Start S3 key prefix
 (<code>QSS3KeyPrefix</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>quickstart-armory-enterprise/</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">S3 key prefix that is used to simulate a directory for your copy of the Quick Start assets. Keep the default prefix unless you are customizing the template. Changing this prefix updates code references to point to a new Quick Start location. This prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slashes (/). End with a forward slash. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html" class="bare">https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html</a> and <a href="https://aws-quickstart.github.io/option1.html" class="bare">https://aws-quickstart.github.io/option1.html</a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Amazon S3 key prefix used to simulate a directory for your copy of the Quick Start assets. Keep the default prefix unless you are customizing the template. Changing this prefix updates code references to point to a new Quick Start location. This prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slashes (/). It must end with a forward slash. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html" class="bare">https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html</a> and <a href="https://aws-quickstart.github.io/option1.html" class="bare">https://aws-quickstart.github.io/option1.html</a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1701,40 +1715,40 @@ Unless you are customizing the Quick Start templates for your own deployment pro
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EKS public access endpoint
+<td class="tableblock halign-left valign-top"><p class="tableblock">Amazon EKS public access endpoint
 (<code>EKSPublicAccessEndpoint</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Disabled</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configure access to the Kubernetes API server endpoint from outside of your VPC.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Additional EKS admin ARN (IAM user)
+<td class="tableblock halign-left valign-top"><p class="tableblock">Additional EKS administrator ARN (IAM user)
 (<code>AdditionalEKSAdminUserArn</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(Optional) IAM user Amazon Resource Name (ARN) to be granted administrative access to the EKS cluster.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Optional) IAM user Amazon Resource Name (ARN) to be granted administrative access to the Amazon EKS cluster.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Additional EKS admin ARN (IAM role)
+<td class="tableblock halign-left valign-top"><p class="tableblock">Additional EKS administrator ARN (IAM role)
 (<code>AdditionalEKSAdminRoleArn</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong><em>Blank string</em></strong></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">(Optional) IAM role Amazon Resource Name (ARN) to be granted administrative access to the EKS cluster.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(Optional) IAM role Amazon Resource Name (ARN) to be granted administrative access to the Amazon EKS cluster.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Instance type
 (<code>NodeInstanceType</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>t3.xlarge</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EC2 instance type.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Amazon EC2 instance type.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Node volume capacity
 (<code>NodeVolumeSize</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>100</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Capacity of EBS volume used by EKS node instances, in Gb.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Capacity of Amazon EBS volume, in gigabytes, used by Amazon EKS node instances.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Number of nodes
 (<code>NumberOfNodes</code>)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>3</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Number of Amazon EKS node instances. The default is one for each of the three Availability Zones.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of Amazon EKS node instances. The default is one for each Availability Zone.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of nodes
@@ -1795,11 +1809,11 @@ and to share your customizations with others.</p>
 </html>
 <!--
 repo commit:
-94ddc7737442fe3ea6ddfbb7b39fb48cff29715f
+2e3dadf9f4c85e1df79d416af2596aaac6d4c17d
 
 submodule config:
- 41862fa5fb846466fba46a36faf67e2a77c2bfc5 docs/boilerplate (heads/main)
- c82727fd708d2e8a2ec45803b642f44e59b23d0d submodules/quickstart-amazon-aurora-mysql (heads/main)
++81ea0b675a571b662377f9de556a26cce8dad05f docs/boilerplate (heads/main)
+ c82727fd708d2e8a2ec45803b642f44e59b23d0d submodules/quickstart-amazon-aurora-mysql (remotes/origin/master-95-gc82727f)
  1278e7f0d2e9786254e2cfbd041c3852f185910c submodules/quickstart-amazon-eks (3.0.0-190-g1278e7f)
  53fbedf058adaea101a587ec0fa9d84cb2a05587 submodules/quickstart-aws-vpc (v1.0-56-g53fbedf)
 -->
