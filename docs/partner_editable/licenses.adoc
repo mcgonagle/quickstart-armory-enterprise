@@ -1,1 +1,3 @@
-The Armory AWS Quick Start is free to try but requires an Armory license to use in production environments. To obtain a license, contact us https://www.armory.io/needs/?utm_source=aws&utm_medium=partner_listing_quickstart&utm_campaign=contactus[here].
+// Include details about the license and how they can sign up. If no license is required, clarify that. 
+
+The Armory Quick Start is free to try but requires an Armory license for production environments. To obtain a license, contact https://www.armory.io/needs/?utm_source=aws&utm_medium=partner_listing_quickstart&utm_campaign=contactus[Armory^].

@@ -3,7 +3,7 @@
 // Include links if helpful. 
 // You don't need to list AWS services or point to general info about AWS; the boilerplate already covers this.
 
-This Quick Start also assumes familiarity with:
+This Quick Start assumes familiarity with the following products and resources:
 
 * Kubectl
 * SSH

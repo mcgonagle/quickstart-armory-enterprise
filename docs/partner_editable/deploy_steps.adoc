@@ -9,7 +9,7 @@
 //TODO Technical_requirements anchor link does not resolve.
  link:#technical-requirements[Technical requirements] section.
 . Use the Region selector in the navigation bar to choose the AWS Region where you want to deploy Amazon EKS.
-. Select the key pair that you created earlier. In the navigation pane of the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], choose *Key Pairs*, and then choose your key pair from the list.
+. Choose the key pair that you created earlier. In the navigation pane of the https://console.aws.amazon.com/ec2/[Amazon EC2 console^], choose *Key Pairs*, and then choose your key pair from the list.
 
 === Launch the Quick Start
 
@@ -19,7 +19,7 @@
 |===
 |{launch_new_vpc}[Deploy Armory Enterprise into a new VPC^]
 |===
-Deployment can take between {deployment_time} to complete, depending on the chosen deployment option and parameter values.
+Deployment takes {deployment_time} to complete, depending on the parameter values you choose.
 
 //NOTE: If you deploy Amazon EKS into an existing VPC, ensure that your VPC has private subnets in different Availability Zones for the workload instances. The subnets require egress internet access using a NAT gateway or an HTTP proxy. If you want to use the Kubernetes integration with Elastic Load Balancing, you must tag each private subnet with `kubernetes.io/role/internal-elb=true` and each public subnet with `kubernetes.io/role/elb=true`.
 
@@ -38,4 +38,3 @@ NOTE: If you created and intend to use an advanced configuration stack, ensure t
 
 NOTE: Unless you are customizing this Quick Start's templates for your own deployment projects, we recommend that you keep the default settings for the parameters labeled `Quick Start S3 bucket name`, `Quick Start S3 bucket
 Region`, and `Quick Start S3 key prefix`. Changing these parameter settings automatically updates code references to point to a new Quick Start location. For more information, see the https://aws-quickstart.github.io/option1.html[AWS Quick Start Contributor’s Guide^].
-
