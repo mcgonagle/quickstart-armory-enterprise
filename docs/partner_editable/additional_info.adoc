@@ -6,15 +6,13 @@ NOTE: These steps must run from a network that has access to the Kubernetes API,
 $ kubectl version
 ```
 
-Confirm that the output includes the server version, which indicates a successful connection to the Kubernetes control plane.
-
+. Confirm that the output includes the server version, which indicates a successful connection to the Kubernetes control plane.
++
 ```
 Client Version: version.Info\{Major:"1", Minor:"11", GitVersion:"<version number>", GitCommit:"<commit ID>", GitTreeState:"clean", BuildDate:"2018-12-06T01:33:57Z", GoVersion:"go1.10.3", Compiler:"gc", Platform:"linux/amd64"}
-
++
 Server Version: version.Info\{Major:"1", Minor:"11+", GitVersion:" <version number>", GitCommit:" <commit ID>", GitTreeState:"clean", BuildDate:"2018-12-06T23:13:14Z", GoVersion:"go1.10.3", Compiler:"gc", Platform:"linux/amd64"}
 ```
-
-[start=3]
 . Check for a successful connection between the nodes and cluster by running the `get nodes` command.
 
 ```
