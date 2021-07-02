@@ -4,7 +4,6 @@
 
 Armory provides a scalable and flexible platform for automating software delivery. To help companies deploy software into multiple clouds, the core of Armory’s platform is powered by Operator, an open-source, continuous-delivery platform developed by Netflix and Google. Continuous delivery is a process that builds production software on a consistent basis.
 
-Armory Operator acts as a workflow engine by combining build, provision, and deploy steps into an automated pipeline. It deploys your workloads (for example, containers, packages, and AMIs) to your AWS environment, including Amazon Elastic Compute Cloud (Amazon EC2), Amazon Elastic Kubernetes Service (Amazon EKS), Amazon Elastic Container Service (Amazon ECS), and AWS Lambda.
+Armory Operator acts as a workflow engine by combining build, provision, and deploy steps into an automated pipeline. It deploys your workloads, such as containers, packages, and Amazon Machine Images (AMIs) to your AWS environment. This includes Amazon Elastic Compute Cloud (Amazon EC2), Amazon Elastic Kubernetes Service (Amazon EKS), Amazon Elastic Container Service (Amazon ECS), and AWS Lambda.
 
 With Armory's integrations, you can automate your code from commit to production, where users can then monitor applications, scale up, scale down, roll back, or roll forward. You can use Armory to view and automate all of these actions.
-
