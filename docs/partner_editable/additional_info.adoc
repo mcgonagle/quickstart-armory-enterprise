@@ -1,6 +1,6 @@
 == Test the deployment
 
-NOTE: These steps must be executed from a network that has access to the Kubernetes API, as configured by the *EKS public access endpoint* and *Kubernetes API public access CIDR* parameters. For more information, see https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html[Installing Kubectl^]. If you enabled the optional bastion host, you can connect to it by using SSH. Use the key pair that you specified during deployment and the IP address from the *Outputs* tab of the AWS CloudFormation stack. The bastion host already has Kubectl installed and configured so that it connects to the cluster. To test the CLI, connect to the cluster, and run the following command:
+NOTE: These steps must run from a network that has access to the Kubernetes API, as configured by the *EKS public access endpoint* and *Kubernetes API public access CIDR* parameters. For more information, see https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html[Installing Kubectl^]. If you enabled the optional bastion host, connect to it by using SSH. Use the key pair that you specified during deployment and the IP address from the *Outputs* tab of the AWS CloudFormation stack. The bastion host already has Kubectl installed and configured so that it connects to the cluster. To test the CLI, connect to the cluster, and run the following command:
 
 ```
 $ kubectl version
@@ -35,13 +35,13 @@ CloudFormation operations on the stack to behave unexpectedly.
 
 === Monitor additional resource usage
 
-This deployment enables users of the Amazon EKS cluster to create elastic load balancers and Amazon EBS volumes
-as part of their Kubernetes applications. Because these carry additional costs, we recommend that you grant users of the
-Amazon EKS cluster the minumum permissions required according to https://kubernetes.io/docs/reference/access-authn-authz/rbac/[Kubernetes Role Based Access Control (RBAC)^]
-and that you monitor resource usage by using the Kubernetes CLI or API to describe persistent
+Users of the Amazon EKS cluster can create elastic load balancers and Amazon EBS volumes
+as part of their Kubernetes applications. Because these carry additional costs, grant users of the
+EKS cluster the minimum permissions required by https://kubernetes.io/docs/reference/access-authn-authz/rbac/[Kubernetes Role Based Access Control (RBAC)^],
+and monitor resource usage through the Kubernetes CLI or API for persistent
 volume claims (PVC) and `LoadBalancer` resources across all namespaces. To disable this functionality, update the
 `ControlPlaneRole` IAM role in the child stack to restrict access to the Kubernetes control plane for specific AWS
-APIs, such as `ec2:CreateVolume` and `elb:CreateLoadBalancer`.
+API operations, such as `ec2:CreateVolume` and `elb:CreateLoadBalancer`.
 
 == Security
 
@@ -51,13 +51,13 @@ managed by the native Kubernetes RBAC system. We recommend that you grant least-
 == Adding Kubernetes users
 
 This Quick Start creates an IAM role that creates the Kubernetes control plane. The AWS CloudFormation custom
-resources and Linux bastion host use the IAM role to access the Kubernetes API. Additional IAM users or
+resources and Linux bastion host use the IAM role to access the Kubernetes API. Additional IAM users and
 roles can be added as Kubernetes administrators (**system:master** Kubernetes cluster role) by entering an ARN into the
 **Additional EKS admin ARN** parameter when you launch this Quick Start. To add users after the stack launches, see https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html[Managing users or IAM roles for your cluster^].
 
 == Use AWS CloudFormation to manage Kubernetes resources
 
-This Quick Start includes AWS CloudFormation registry types that enable authoring, creating, and
+This Quick Start includes AWS CloudFormation registry types that allow authoring, creating, and
 managing Kubernetes-based applications. For an example, see the https://github.com/aws-quickstart/quickstart-aws-eks/blob/master/templates/example-workload.template.yaml[example-workload template^].
 
 == Optional add-ins

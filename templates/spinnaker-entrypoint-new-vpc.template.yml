@@ -99,7 +99,7 @@ Metadata:
       DBInstanceClass:
         default: Database instance class
       DBMasterUsername:
-        default: Database administrator name
+        default: Database administrator
       DBMasterUserPassword:
         default: Database administrator password
       ProvisionBastionHost:
@@ -127,7 +127,7 @@ Metadata:
       VPCCIDR:
         default: VPC CIDR
       KeyPairName:
-        default: Key-pair name
+        default: Key pair name
       RemoteAccessCIDR:
         default: Permitted IP range
       # Amazon EKS cluster configuration
@@ -262,7 +262,7 @@ Parameters:
     MinValue: 1
     MaxValue: 35
   DBEngineVersion:
-    Description: "Version of the database engine. Currently, Multi-Master is available only for Aurora-MySQL5.6.10a. Serverless is available only for Aurora-MySQL5.6.10a and Aurora-MySQL5.7-2.07.1. For more information, see https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraFeaturesRegionsDBEngines.grids.html."
+    Description: "Version of the database engine. Currently, multi-master clusters are available only for Aurora-MySQL5.6.10a. Serverless is available only for Aurora-MySQL5.6.10a and Aurora-MySQL5.7-2.07.1. For more information, see https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.AuroraFeaturesRegionsDBEngines.grids.html."
     Type: String
     Default: 'Aurora-MySQL5.6.10a'
     AllowedValues:
@@ -326,7 +326,7 @@ Parameters:
       - db.r4.2xlarge
       - db.t3.medium
       - db.t3.small
-    Description: "Name of the compute and memory-capacity class of the database instance. The db.t3 instance class does not support RDS performance insights."
+    Description: "Name of the compute and memory-capacity class of the database instance. The db.t3 instance class does not support Amazon RDS performance insights."
     ConstraintDescription: "Select a valid database instance type."
     Default: db.r5.large
     Type: String
@@ -342,7 +342,7 @@ Parameters:
     AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
     ConstraintDescription: "Must begin with a letter and contain only alphanumeric characters."
     Default: msadmin
-    Description: "Administrator user name for the database account."
+    Description: "Administrator name for the database account."
     MaxLength: "16"
     MinLength: "1"
     Type: String
