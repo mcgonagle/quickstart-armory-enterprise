@@ -1186,11 +1186,11 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <ol class="arabic">
 <li>
 <p>Sign in to your AWS account at <a href="https://aws.amazon.com" class="bare">https://aws.amazon.com</a> with an IAM user role that has the necessary permissions. For more information, see
-<a href="#planning-the-deployment">Planning the deployment</a>, earlier in this guide.</p>
+<a href="#_planning_the_deployment">Planning the deployment</a>, earlier in this guide.</p>
 </li>
 <li>
 <p>Ensure that your AWS account is configured correctly, as discussed in the
-<a href="#technical-requirements">Technical requirements</a> section.</p>
+<a href="#_technical_requirements">Technical requirements</a> section.</p>
 </li>
 <li>
 <p>Use the Region selector in the navigation bar to choose the AWS Region where you want to deploy Amazon EKS.</p>
@@ -1230,9 +1230,6 @@ deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
 <ol class="arabic" start="3">
 <li>
 <p>Check the Region that’s displayed in the upper-right corner of the navigation bar, and change it if necessary. This is where the network infrastructure for Amazon EKS is built. The template launches in the US East (Ohio) Region by default.</p>
-</li>
-</ol>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1245,16 +1242,12 @@ Some services are not supported in all AWS Regions. For a current list of suppor
 </tr>
 </table>
 </div>
-<div class="olist arabic">
-<ol class="arabic" start="4">
+</li>
 <li>
 <p>On the <strong>Select template</strong> page, keep the default setting for the template URL, and then choose <strong>Next</strong>.</p>
 </li>
 <li>
 <p>On the <strong>Specify stack details</strong> page, change the stack name if needed. Review the parameters for the template, and provide values for any parameters that require input. For all other parameters, review the default settings, and customize them as necessary.</p>
-</li>
-</ol>
-</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1292,16 +1285,23 @@ Region</code>, and <code>Quick Start S3 key prefix</code>. Changing these parame
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>+</p>
-</div>
-<div class="paragraph">
-<p>+
-. On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you’re finished, choose <strong>Next</strong>.
-. On the <strong>Review</strong> page, review and confirm the template settings. Under <strong>Capabilities</strong>, select the two check boxes to acknowledge that the template creates IAM resources and might require the ability to automatically expand macros.
-. Choose <strong>Create stack</strong> to deploy the stack.
-. Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the Armory Enterprise deployment is ready.
-. To view the created resources, see the values displayed in the <strong>Outputs</strong> tab for the stack.</p>
+</li>
+<li>
+<p>On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you’re finished, choose <strong>Next</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Review</strong> page, review and confirm the template settings. Under <strong>Capabilities</strong>, select the two check boxes to acknowledge that the template creates IAM resources and might require the ability to automatically expand macros.</p>
+</li>
+<li>
+<p>Choose <strong>Create stack</strong> to deploy the stack.</p>
+</li>
+<li>
+<p>Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the Armory Enterprise deployment is ready.</p>
+</li>
+<li>
+<p>To view the created resources, see the values displayed in the <strong>Outputs</strong> tab for the stack.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -1326,8 +1326,12 @@ These steps must run from a network that has access to the Kubernetes API, as co
 <pre class="highlight"><code>$ kubectl version</code></pre>
 </div>
 </div>
-<div class="paragraph">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
 <p>Confirm that the output includes the server version, which indicates a successful connection to the Kubernetes control plane.</p>
+</li>
+</ol>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1337,7 +1341,7 @@ Server Version: version.Info\{Major:"1", Minor:"11+", GitVersion:" &lt;version n
 </div>
 </div>
 <div class="olist arabic">
-<ol class="arabic" start="3">
+<ol class="arabic" start="2">
 <li>
 <p>Check for a successful connection between the nodes and cluster by running the <code>get nodes</code> command.</p>
 </li>
@@ -1809,10 +1813,10 @@ and to share your customizations with others.</p>
 </html>
 <!--
 repo commit:
-4a59e1e8eb2c252e8dfcef3b9da0f8bd9a5e2ef8
+f33f6a2947f2de560aead582c7042545f142576d
 
 submodule config:
-+81ea0b675a571b662377f9de556a26cce8dad05f docs/boilerplate (heads/main)
+ 81ea0b675a571b662377f9de556a26cce8dad05f docs/boilerplate (heads/main)
  c82727fd708d2e8a2ec45803b642f44e59b23d0d submodules/quickstart-amazon-aurora-mysql (remotes/origin/master-95-gc82727f)
  1278e7f0d2e9786254e2cfbd041c3852f185910c submodules/quickstart-amazon-eks (3.0.0-190-g1278e7f)
  53fbedf058adaea101a587ec0fa9d84cb2a05587 submodules/quickstart-aws-vpc (v1.0-56-g53fbedf)
