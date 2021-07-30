@@ -42,22 +42,37 @@ Resources:
     Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: "AWSQS::Kubernetes::Resource"
     Properties:
-      ClusterName: !Ref KubeClusterName 
+      ClusterName: !Ref KubeClusterName
+      Namespace: "ingress-nginx"
       Url: !Sub
         - 's3://${S3Bucket}/${QSS3KeyPrefix}manifests/ingress.yaml'
         - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
 #      From - Url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/aws/deploy.yaml
     DependsOn: SpinnakerService
-  GetELBDetail:
-    DependsOn: SpinnakerService
-    Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
-    Type: AWSQS::Kubernetes::Get
-    Properties:
-      ClusterName: !Ref KubeClusterName
-      Name: "service/spin-deck"
-      Namespace: "spinnaker"
-      JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
-Outputs:
-  SpinDeckDNSName:
-    Value: !GetAtt "GetELBDetail.Response"
+  #GetELBDetail:
+  #  DependsOn: SpinnakerService
+  #  Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
+  #  Type: AWSQS::Kubernetes::Get
+  #  Properties:
+  #    ClusterName: !Ref KubeClusterName
+   #   Name: "service/spin-deck"
+   #   Namespace: "spinnaker"
+   #   JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
+  #WPElbHostName:
+   # DependsOn: GetELBDetail
+   # Type: "Custom::KubeGet"
+  #  Version: '1.0'
+   # Properties:
+   #   ServiceToken: !Sub "arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:EKS-QuickStart-KubeGet-${KubeClusterName}"
+  #    ClusterName: !Ref KubeClusterName
+      #KubeConfigKmsContext: !Ref KubeConfigKmsContext
+   #   Namespace: "spinnaker"
+   #   Name: "service/spin-deck"
+   #   JsonPath: '{.status.loadBalancer.ingress[0].hostname}'
+#Outputs:
+  #SpinDeckDNSName:
+  #  Value: !GetAtt "GetELBDetail.Response"
+    #Value: !Ref GetELBDetail
+  #WPElbHostName:
+  #  Value: !Ref WPElbHostName
