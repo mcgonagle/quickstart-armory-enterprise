@@ -17,7 +17,7 @@ tests:
       DBMasterUserPassword: --overridden--
       AvailabilityZones: $[taskcat_genaz_3]
       NumberOfAZs: 3
-      EKSPublicAccessEndpoint: Enabled
+      #EKSPublicAccessEndpoint: Enabled
       ProvisionBastionHost: Disabled
     regions:
     - us-west-2

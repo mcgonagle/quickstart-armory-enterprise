@@ -42,7 +42,8 @@ Resources:
     Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: "AWSQS::Kubernetes::Resource"
     Properties:
-      ClusterName: !Ref KubeClusterName 
+      ClusterName: !Ref KubeClusterName
+      Namespace: "ingress-nginx"
       Url: !Sub
         - 's3://${S3Bucket}/${QSS3KeyPrefix}manifests/ingress.yaml'
         - S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
@@ -50,7 +51,7 @@ Resources:
 #      From - Url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/aws/deploy.yaml
     DependsOn: SpinnakerService
   GetELBDetail:
-    DependsOn: SpinnakerService
+    DependsOn: IngressDeployment
     Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: AWSQS::Kubernetes::Get
     Properties:
@@ -58,6 +59,6 @@ Resources:
       Name: "service/spin-deck"
       Namespace: "spinnaker"
       JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
-Outputs:
-  SpinDeckDNSName:
-    Value: !GetAtt "GetELBDetail.Response"
+#Outputs:
+#  SpinDeckDNSName:
+ #   Value: !GetAtt "GetELBDetail.Response"
