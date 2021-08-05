@@ -50,8 +50,13 @@ Resources:
           S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
 #      From - Url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/aws/deploy.yaml
     DependsOn: SpinnakerService
+  GetELBDetailWaitCondition:
+    Type: AWS::CloudFormation::WaitCondition
+    DependsOn:  IngressDeployment
+    Properties:
+      Timeout: 120
   GetELBDetail:
-    DependsOn: IngressDeployment
+    DependsOn: GetELBDetailWaitCondition
     Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: AWSQS::Kubernetes::Get
     Properties:
