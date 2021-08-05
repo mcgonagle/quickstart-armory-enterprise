@@ -51,7 +51,7 @@ Resources:
 #      From - Url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/aws/deploy.yaml
     DependsOn: SpinnakerService
   GetELBDetail:
-    DependsOn: GetELBDetailWaitCondition
+    DependsOn: IngressDeployment
     Metadata: { cfn-lint: { config: { ignore_checks: [ E3001 ] } } }
     Type: AWSQS::Kubernetes::Get
     Properties:
@@ -61,4 +61,4 @@ Resources:
       JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
 #Outputs:
 #  SpinDeckDNSName:
- #   Value: !GetAtt "GetELBDetail.Response"
+#    Value: !GetAtt "GetELBDetail.Response"
