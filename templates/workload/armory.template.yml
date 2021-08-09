@@ -59,6 +59,7 @@ Resources:
       Name: "service/spin-deck"
       Namespace: "spinnaker"
       JsonPath: "{.status.loadBalancer.ingress[0].hostname}"
-#Outputs:
-#  SpinDeckDNSName:
-#    Value: !GetAtt "GetELBDetail.Response"
+      Retries: 3
+Outputs:
+  SpinDeckDNSName:
+    Value: !GetAtt "GetELBDetail.Response"
