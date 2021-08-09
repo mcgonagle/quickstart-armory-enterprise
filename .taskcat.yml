@@ -11,13 +11,14 @@ project:
 tests:
   armory-3az-defaults:
     parameters:
-      KeyPairName: --overridden--
-      RemoteAccessCIDR: --overridden--
-      DBUserPassword: --overridden--
-      DBMasterUserPassword: --overridden--
+      KeyPairName: cikey
+      RemoteAccessCIDR: 10.0.0.0/0
+      DBUserPassword: P!$[taskcat_genpass_12A]
+      DBMasterUserPassword: P!$[taskcat_genpass_12A]
       AvailabilityZones: $[taskcat_genaz_3]
       NumberOfAZs: 3
-      #EKSPublicAccessEndpoint: Enabled
+      EKSPublicAccessEndpoint: Enabled
       ProvisionBastionHost: Disabled
     regions:
     - us-west-2
+    - us-east-1
