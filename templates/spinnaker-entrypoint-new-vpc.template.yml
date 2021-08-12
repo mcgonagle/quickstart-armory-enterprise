@@ -542,9 +542,9 @@ Outputs:
     Value: !GetAtt EKSStack.Outputs.BastionSecurityGroup
   NodeGroupSecurityGroup:
     Value: !GetAtt EKSStack.Outputs.NodeGroupSecurityGroup
-  #ArmoryUI:
-  #  Value:
-  #    !Sub
-  #    - "http://${DNSAddress}:9000/"
-  #    - DNSAddress: !Sub "${SpinnakerStack.Outputs.SpinDeckDNSName}"
-  #  Description: "Armory kubernetes spin-deck LoadBalancer URL."
+  ArmoryUI:
+    Value:
+      !Sub
+      - "http://${DNSAddress}:9000/"
+      - DNSAddress: !Sub "${SpinnakerStack.Outputs.SpinDeckDNSName}"
+    Description: "Armory kubernetes spin-deck LoadBalancer URL."
