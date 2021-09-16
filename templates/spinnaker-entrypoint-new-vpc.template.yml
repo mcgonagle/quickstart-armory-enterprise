@@ -104,8 +104,6 @@ Metadata:
         default: Database administrator password
       ProvisionBastionHost:
         default: Provision bastion host
-      EnableTCPForwarding:
-        default: Enable TCP forwarding
       PrivateSubnet1CIDR:
         default: Private subnet 1 CIDR
       PrivateSubnet2CIDR:
