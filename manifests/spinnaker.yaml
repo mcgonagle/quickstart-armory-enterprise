@@ -271,7 +271,7 @@ spec:
       repository: {}
       security: {}
       spinnaker: {}
-      version: 2.26.0
+      version: 2.27.1-rc1
     profiles:
       clouddriver: {}
       echo: {}
