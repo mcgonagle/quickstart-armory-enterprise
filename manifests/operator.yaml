@@ -6,7 +6,7 @@ metadata:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: spinnakeraccounts.spinnaker.io
+  name: armoryaccounts.spinnaker.armory.io
 spec:
   additionalPrinterColumns:
   - JSONPath: .spec.type
@@ -21,20 +21,20 @@ spec:
     description: Invalid Reason
     name: reason
     type: string
-  group: spinnaker.io
+  group: spinnaker.armory.io
   names:
-    kind: SpinnakerAccount
-    listKind: SpinnakerAccountList
-    plural: spinnakeraccounts
+    kind: ArmoryAccount
+    listKind: ArmoryAccountList
+    plural: armoryaccounts
     shortNames:
-    - spinaccount
-    singular: spinnakeraccount
+    - armoryaccount
+    singular: armoryaccount
   scope: Namespaced
   subresources:
     status: {}
   validation:
     openAPIV3Schema:
-      description: SpinnakerAccount is the Schema for the spinnakeraccounts API
+      description: ArmoryAccount is the Schema for the armoryaccounts API
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
@@ -49,7 +49,7 @@ spec:
         metadata:
           type: object
         spec:
-          description: SpinnakerAccountSpec defines the desired state of SpinnakerAccount
+          description: ArmoryAccountSpec defines the desired state of ArmoryAccount
           properties:
             enabled:
               type: boolean
@@ -427,7 +427,7 @@ spec:
           - type
           type: object
         status:
-          description: SpinnakerAccountStatus defines the observed state of SpinnakerAccount
+          description: ArmoryAccountStatus defines the observed state of ArmoryAccount
           properties:
             invalidReason:
               type: string
@@ -474,7 +474,7 @@ spec:
     description: Version
     name: version
     type: string
-  - JSONPath: .status.lastConfigurationTime
+  - JSONPath: .status.lastDeployed.config.lastUpdatedAt
     description: Last Configured
     name: lastConfigured
     type: date
@@ -494,6 +494,10 @@ spec:
     description: API URL
     name: apiUrl
     priority: 1
+    type: string
+  - JSONPath: .status.registrationId
+    description: REGISTRATION ID
+    name: registrationId
     type: string
   group: spinnaker.armory.io
   names:
@@ -531,7 +535,7 @@ spec:
                   description: Enable accounts to be added dynamically
                   type: boolean
                 enabled:
-                  description: Enable the injection of SpinnakerAccount
+                  description: Enable the injection of ArmoryAccount
                   type: boolean
               type: object
             expose:
@@ -621,6 +625,7 @@ spec:
                         type: array
                     type: object
                 type: object
+              description: Patch Kustomization of service and deployment per service
               type: object
             networkPolicy:
               description: SpinnakerServiceStatus defines the observed state of SpinnakerService
@@ -1208,6 +1213,9 @@ spec:
                 type: object
               description: Last deployed hashes
               type: object
+            registrationId:
+              description: Registration ID
+              type: string
             serviceCount:
               description: Number of services in Spinnaker
               type: integer
